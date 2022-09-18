@@ -42,9 +42,9 @@
           <div class="nhom2">
             <input
               type="text"
-              id="name"
-              name="name"
-              placeholder="VD: Quần Jean"
+              id="linkYoutube"
+              name="linkYoutube"
+              placeholder="Youtube ID"
             />
             <select id="category" name="categoryID">
               <% listategory.map(function(value){%>
@@ -53,6 +53,14 @@
             </select>
           </div>
           <small class="note2"></small> <br />
+          <div class="nhom3">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter product name in here"
+            />
+          </div>
           <input
             id="clickavatar"
             type="file"
@@ -164,13 +172,21 @@
               </select>
             </div>
             <div class="it">
-              <input type="text" class="name" name="name" placeholder="Name" />
+              <input
+                type="text"
+                class="linkYoutube"
+                name="linkYoutube"
+                placeholder="Youtube ID"
+              />
               <input
                 type="number"
                 class="price"
                 name="price"
                 placeholder="Price"
               />
+            </div>
+            <div class="it">
+              <input type="text" class="name" name="name" placeholder="Name" />
             </div>
             <div class="anh-chien">
               <input
@@ -180,7 +196,7 @@
                 style="display: none"
               />
               <img
-                src="/public/upload/add.jpg"
+                src="/public/icon/add.png"
                 alt=""
                 id="changeimg"
                 onclick="impor()"

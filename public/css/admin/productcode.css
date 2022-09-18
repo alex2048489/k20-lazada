@@ -40,7 +40,8 @@
   display: flex;
 }
 #code,
-#name {
+#name,
+#linkYoutube {
   border: none;
   border-bottom: 1px solid orange;
   padding: 10px;
@@ -57,6 +58,8 @@
   object-fit: cover;
   object-position: center;
   border: none;
+  margin-top: 25px;
+  cursor: pointer;
 }
 
 #add {
@@ -102,6 +105,8 @@
   /*cho Firefox*/
   scrollbar-width: thin; /* "auto" hoặc "thin" */
   scrollbar-color: orange #ccc; /* scroll thumb and track */
+  padding: 0 8px;
+  cursor: pointer;
 }
 .divcategory {
   height: 50px;
@@ -218,8 +223,9 @@
   text-align: center;
 }
 .name,
-.code {
-  width: 80%;
+.code,
+.linkYoutube {
+  width: 100%;
   border: none;
   border-bottom: 1px solid orange;
 }

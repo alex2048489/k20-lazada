@@ -42,45 +42,45 @@ fileToRea.addEventListener(
 
 async function add() {
   try {
-    const code = $('#code').val()
-    const name = $('#name').val()
-    const clickavatar = $('#clickavatar').val()
-    const category = $('#category').val()
-    const price = $('#price').val()
-    if(code == ''){
-     $('.note1').text('Vui lòng điền mã code sản phẩm')
+    const code = $("#code").val();
+    const name = $("#name").val();
+    const clickavatar = $("#clickavatar").val();
+    const category = $("#category").val();
+    const price = $("#price").val();
+    const linkYoutube = $("#linkYoutube").val();
+    if (code == "") {
+      $(".note1").text("Vui lòng điền mã code sản phẩm");
     }
-    if(name == ''){
-      $('.note2').text('Vui lòng điền tên sản phẩm')
+    if (name == "") {
+      $(".note2").text("Vui lòng điền tên sản phẩm");
     }
-    if(clickavatar == ''){
-      $('.note3').text('Vui lòng ảnh sản phẩm')
+    if (clickavatar == "") {
+      $(".note3").text("Vui lòng ảnh sản phẩm");
     }
-    if(category == ''){
-      $('.note4').text('Vui lòng nhập phân loại sản phẩm')
+    if (category == "") {
+      $(".note4").text("Vui lòng nhập phân loại sản phẩm");
     }
-    if(price == ''){
-      $('.note5').text('Vui lòng nhập giá tiền sản phẩm')
-    }
-    else{
-    const form = $("form")[0];
-    const formData = new FormData(form);
-    const res = await $.ajax({
-      url: "/codeProduct/add",
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-    });
-    window.location.reload();
+    if (price == "") {
+      $(".note5").text("Vui lòng nhập giá tiền sản phẩm");
+    } else {
+      const form = $("form")[0];
+      const formData = new FormData(form);
+      const res = await $.ajax({
+        url: "/codeProduct/add",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+      });
+      window.location.reload();
     }
   } catch (error) {
     console.log(error);
   }
 }
-var id = ''
+var id = "";
 async function xoa(a) {
-  id = a
+  id = a;
 }
 
 var idupdate = "";
@@ -89,66 +89,64 @@ async function update(id) {
   idupdate = id;
   const res = await $.ajax({
     url: "/codeProduct/" + id,
-    type: 'GET'
-  })
-  $(".code").val(res.code)
-  $(".name").val(res.name)
-  $("#changeimg").attr('src', "/" + res.thumbnail)
-  $(".price").val(res.price)
+    type: "GET",
+  });
+  $(".code").val(res.code);
+  $(".name").val(res.name);
+  $("#changeimg").attr("src", res.thumbnail);
+  $(".price").val(res.price);
+  $(".linkYoutube").val(res.linkYoutube);
 }
 
+var current = "";
 
-var current = ''
-
-async function but(page,total){
-  current = page
+async function but(page, total) {
+  current = page;
   const res = await $.ajax({
     url: `/codeProduct/get?page=${page}&limit=12`,
-    type: 'GET'
-  })
-  $('.butt').html('')
-  $('.butt').html(res)
-  console.log(140, page,total);
-  const pagea = String(page)
-  if(page >= total){
-    $('.next').attr('disabled', true)
-    $('.next').css({opacity: '0.5'})
+    type: "GET",
+  });
+  $(".butt").html("");
+  $(".butt").html(res);
+  console.log(140, page, total);
+  const pagea = String(page);
+  if (page >= total) {
+    $(".next").attr("disabled", true);
+    $(".next").css({ opacity: "0.5" });
   }
-  if(pagea >= total){
-    $('.next').attr('disabled', true)
-    $('.next').css({opacity: '0.5'})
+  if (pagea >= total) {
+    $(".next").attr("disabled", true);
+    $(".next").css({ opacity: "0.5" });
+  } else {
+    $(".next").attr("disabled", false);
+    $(".next").css({ opacity: "2" });
   }
-  else{
-    $('.next').attr('disabled', false)
-    $('.next').css({opacity: '2'})
+  if (page === 1) {
+    $(".back").attr("disabled", true);
+    $(".back").css({ opacity: "0.5" });
   }
-  if(page === 1){
-    $('.back').attr('disabled', true)
-    $('.back').css({opacity: '0.5'})
+  if (pagea === "1") {
+    $(".back").attr("disabled", true);
+    $(".back").css({ opacity: "0.5" });
+  } else {
+    $(".back").attr("disabled", false);
+    $(".back").css({ opacity: "2" });
   }
-  if(pagea === '1'){
-    $('.back').attr('disabled', true)
-    $('.back').css({opacity: '0.5'})
-  }else{
-    $('.back').attr('disabled', false)
-    $('.back').css({opacity: '2'})
-  }
-  $('.Btn').css({opacity: '0.5'})
-  $(`.Btn[value=${page}]`).css({opacity: '5.0'})
+  $(".Btn").css({ opacity: "0.5" });
+  $(`.Btn[value=${page}]`).css({ opacity: "5.0" });
 }
 
-var number = 1
-but(number)
+var number = 1;
+but(number);
 
-async function next(total){
-  number ++;
-  but(number,total)
+async function next(total) {
+  number++;
+  but(number, total);
 }
-async function back(total){
-  number --;
-  but(number,total)
+async function back(total) {
+  number--;
+  but(number, total);
 }
-
 
 async function Save() {
   const code = $(".code").val();
@@ -156,7 +154,7 @@ async function Save() {
   const thumbnail = $("#clickimg").val();
   const category = $(".category").val();
   const price = $(".price").val();
-  const form = $('#form')[0]
+  const form = $("#form")[0];
   const formData = new FormData(form);
   const res = await $.ajax({
     url: `/codeProduct/${idupdate}?page=${current}&limit=12`,
@@ -165,19 +163,17 @@ async function Save() {
     processData: false,
     contentType: false,
   });
-  $('#close').trigger('click')
-  $('.butt').html('')
-  $('.butt').html(res)
+  $("#close").trigger("click");
+  $(".butt").html("");
+  $(".butt").html(res);
 }
 
-
-async function yes(){
+async function yes() {
   const res = await $.ajax({
     url: `/codeProduct/${id}?page=${current}&limit=12`,
-    type: "DELETE"
+    type: "DELETE",
   });
-  $('.closae').trigger('click')
-  $('.butt').html('')
-  $('.butt').html(res)
+  $(".closae").trigger("click");
+  $(".butt").html("");
+  $(".butt").html(res);
 }
-

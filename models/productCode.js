@@ -9,6 +9,7 @@ const ProductCodeSchema = mongoose.Schema(
     categoryID: { type: String, ref: "category" },
     price: Number,
     stars: Number,
+    linkYoutube: String,
   },
   { collection: "productCode", timestamps: true }
 );

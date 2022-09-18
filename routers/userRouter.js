@@ -22,11 +22,10 @@ const upload = multer({ storage: storage });
 const imgbbUploader = require("imgbb-uploader");
 
 // Profile
-router.put("/profile/change-password", async (req, res) => {
+router.put("/profile/change-password", checkLogin, async (req, res) => {
   try {
-    let token = req.cookies.user;
     const user = await userModel.findOne({
-      token: token,
+      _id: req.id,
     });
     if (user) {
       const compare = await bcrypt.compare(
@@ -37,7 +36,7 @@ router.put("/profile/change-password", async (req, res) => {
         const hash = await bcrypt.hash(req.body.newPassword, 10);
         await userModel.updateOne(
           {
-            token: token,
+            _id: req.id,
           },
           {
             password: hash,

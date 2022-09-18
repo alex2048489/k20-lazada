@@ -27,20 +27,19 @@
     include('../../components/loading.ejs') %>
 
     <main id="loading">
-      <div class="lienket">
-        <a href="/">Trang chủ</a>
-        <span> > </span>
-        <a
-          href="/category/<%= listcode.categoryID._id %>?page=1&sort=popularity"
-          ><%= listcode.categoryID.name %></a
-        >
-        <span> > </span>
-        <%= listcode.name.length > 60 ? listcode.name.replace(
-        listcode.name.slice(60, listcode.name.length ) , "...") : listcode.name
-        %>
-      </div>
-
       <div class="container">
+        <div class="lienket">
+          <a href="/">Trang chủ</a>
+          <span> > </span>
+          <a
+            href="/category/<%= listcode.categoryID._id %>?page=1&sort=popularity"
+            ><%= listcode.categoryID.name %></a
+          >
+          <span> > </span>
+          <%= listcode.name.length > 60 ? listcode.name.replace(
+          listcode.name.slice(60, listcode.name.length ) , "...") :
+          listcode.name %>
+        </div>
         <div class="block">
           <div class="block-left"><%- include('./zoomImg.ejs') %></div>
 
@@ -151,21 +150,36 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="evoluate" id="evoluate">
-        <h5 class="evoluate-title">
-          Đánh giá và nhận xét của <%= listcode.name %>
-        </h5>
-        <% if (listComment.length == 0) { %>
-        <div class="evoluate-empty">
-          <img src="/public/icon/no-comment.png" alt="" />
-          <h5>
-            Nội dung này hiện chưa có đánh giá. Hãy là người đầu tiên mua và
-            đánh giá sản phẩm của chúng tôi nào!
-          </h5>
+        <% if (listcode.linkYoutube && listcode.linkYoutube !== '') { %>
+        <div class="video">
+          <h2 class="video-title">Xem chi tiết về <%= listcode.name %></h2>
+          <div class="video-desc">
+            <iframe
+              width="956"
+              height="538"
+              src="https://www.youtube.com/embed/<%= listcode.linkYoutube %>"
+              title="Youtube"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
-        <% } else { %> <%- include('./rated') %> <% } %>
+        <% } %>
+        <div class="evoluate" id="evoluate">
+          <h5 class="evoluate-title">
+            Đánh giá và nhận xét của <%= listcode.name %>
+          </h5>
+          <% if (listComment.length == 0) { %>
+          <div class="evoluate-empty">
+            <img src="/public/icon/no-comment.png" alt="" />
+            <h5>
+              Nội dung này hiện chưa có đánh giá. Hãy là người đầu tiên mua và
+              đánh giá sản phẩm của chúng tôi nào!
+            </h5>
+          </div>
+          <% } else { %> <%- include('./rated') %> <% } %>
+        </div>
       </div>
     </main>
 

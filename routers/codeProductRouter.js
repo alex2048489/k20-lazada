@@ -93,6 +93,7 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
       thumbnail: upload.url,
       categoryID: req.body.categoryID,
       price: req.body.price,
+      linkYoutube: req.body.linkYoutube,
     });
     res.status(200).json(create);
   } catch (error) {
@@ -151,6 +152,7 @@ router.put("/:idupdate", upload.single("chien"), async function (req, res) {
           nameSearch: removeAccents(req.body.name),
           categoryID: req.body.categoryID,
           price: req.body.price,
+          linkYoutube: req.body.linkYoutube,
         }
       );
       const listproductCode = await ProductCode.find()
@@ -167,6 +169,7 @@ router.put("/:idupdate", upload.single("chien"), async function (req, res) {
           thumbnail: upload.url,
           categoryID: req.body.categoryID,
           price: req.body.price,
+          linkYoutube: req.body.linkYoutube,
         }
       );
       const listproductCode = await ProductCode.find()

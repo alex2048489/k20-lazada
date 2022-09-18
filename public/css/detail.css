@@ -312,6 +312,21 @@ body {
   color: #757575;
 }
 
+.video {
+  background-color: white;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.video-desc {
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.video-desc iframe {
+  width: 100%;
+}
+
 .shop {
   text-align: center;
 }
@@ -421,7 +436,8 @@ body {
   margin-top: 20px;
 }
 
-.evoluate-title {
+.evoluate-title,
+.video-title {
   line-height: 52px;
   padding: 0 24px;
   margin-bottom: 0;
