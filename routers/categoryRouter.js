@@ -226,7 +226,7 @@ router.delete("/:id", async function (req, res) {
 router.put("/:id", upload.single("thumbnail"), async function (req, res) {
   try {
     if (req.file === undefined) {
-      const update = await Category.updateOne(
+      await Category.updateOne(
         { _id: req.params.id },
         {
           name: req.body.name,
@@ -237,11 +237,12 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
         .limit(req.query.limit);
       res.render("admin/datacategory", { listcategory });
     } else {
-      const update = await Category.updateOne(
+      const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
+      await Category.updateOne(
         { _id: req.params.id },
         {
           name: req.body.name,
-          thumbnail: req.file.path,
+          thumbnail: upload.url,
         }
       );
       const listcategory = await Category.find()
