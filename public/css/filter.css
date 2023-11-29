@@ -287,9 +287,10 @@ input[type="checkbox"]:checked:after {
   display: flex;
   align-items: center;
   height: 24px;
+  cursor: pointer;
 }
 
-.khoibentrai-group-color label {
+.khoibentrai-group-color span {
   font-size: 14px;
   color: #757575;
   margin-left: 8px;

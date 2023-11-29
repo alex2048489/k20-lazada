@@ -239,9 +239,10 @@
 #quantityid {
   padding: 20px;
   border: none;
-  width: 100%;
+  width: 20%;
   height: 30px;
   border-bottom: 1px solid orange;
+  margin-left: 15px;
 }
 .update-color {
   display: flex;

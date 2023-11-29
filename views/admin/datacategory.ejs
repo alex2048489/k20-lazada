@@ -5,7 +5,7 @@
     <div class="update-delete">
       <button
         type="button"
-        onclick="update('<%= value._id %>')"
+        onclick="update('<%= JSON.stringify(value) %>')"
         id="<%= value._id %>"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"

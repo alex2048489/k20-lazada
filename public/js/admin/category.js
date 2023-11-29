@@ -78,16 +78,13 @@ async function addCategory() {
   }
 }
 
-async function update(id) {
+async function update(value) {
+  const { _id, name, thumbnail } = JSON.parse(value);
   try {
-    const res = await $.ajax({
-      url: "/category/" + id,
-      type: "GET",
-    });
-    console.log(res.name, res.thumbnail);
-    $(`#nameid`).val(res.name);
-    $("#changeimg").attr("src", "/" + res.thumbnail);
-    idupdate = id;
+    console.log(name, thumbnail);
+    $(`#nameid`).val(name);
+    $("#changeimg").attr("src", thumbnail);
+    idupdate = _id;
   } catch (error) {
     console.log(error);
   }

@@ -2,8 +2,7 @@ const router = require("express").Router();
 const nodemailer = require("nodemailer");
 const CartModel = require("../models/cartModel");
 const OrderModel = require("../models/orderModel");
-const UserModel = require("../models/userModel");
-const { checkUser, checkLogin } = require("../middleWare/checkLogin");
+const { checkLogin } = require("../middleWare/checkLogin");
 const CategoryModel = require("../models/category");
 
 router.get("/:id", checkLogin, async (req, res) => {
@@ -174,14 +173,9 @@ router.put("/done", checkLogin, async (req, res) => {
         " đã được giao thành công",
       req.body.htmlGmail
     );
-    await OrderModel.updateOne(
-      {
-        _id: req.body.orderID,
-      },
-      {
-        status: "done",
-      }
-    );
+    await OrderModel.findByIdAndUpdate(req.body.orderID, {
+      status: "done",
+    });
     res.status(200).json({ mess: "Successfull" });
   } catch (error) {
     res.status(500).json({ mess: "Server Error" });

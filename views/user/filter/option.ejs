@@ -2,24 +2,26 @@
   <h3>Nhóm màu</h3>
   <% if (listDetail.length > 0 ) { %> <% listDetail.map(detail => { %> <% if
   (detail.color != '') { %>
-  <div class="khoibentrai-group-color">
+  <label for="<%= detail._id %>" class="khoibentrai-group-color">
     <input
       type="checkbox"
       name=""
       onclick="checkboxColor(this, '<%= detail.color %>')"
+      id="<%= detail._id %>"
     />
-    <label><%= detail.color %></label>
-  </div>
+    <span><%= detail.color %></span>
+  </label>
   <% } %> <% }) %> <% } else { %>
-  <div class="khoibentrai-group-color">
+  <label for="color-select" class="khoibentrai-group-color">
     <input
       type="checkbox"
       name=""
+      id="color-select"
       onclick="checkboxColor(this, '<%= colorName %>')"
       checked
     />
-    <label><%= colorName %></label>
-  </div>
+    <span><%= colorName %></span>
+  </label>
   <% } %>
 </div>
 <div class="khoibentrai-group">

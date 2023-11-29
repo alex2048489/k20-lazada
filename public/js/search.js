@@ -13,7 +13,7 @@ if (url.includes("color")) {
     </div>
     `;
   $(".khoibenphai-price").append(html);
-} else if ($(".khoibentrai-group-color label").text() == "") {
+} else if ($(".khoibentrai-group-color span").text() == "") {
   $("#color").css("display", "none");
 }
 

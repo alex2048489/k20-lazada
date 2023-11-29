@@ -159,33 +159,34 @@ async function xoaproduct(id) {
   }
 }
 
-// var idupdate = "";
-// async function up(idup) {
-//   const res = await $.ajax({
-//     url: "/product/get/" + idup,
-//     type: "GET",
-//   });
-//   $("#colorid").val(res.color);
-//   $("#sizeid").val(res.size);
-//   $("#quantityid").val(res.quantity);
-//   idupdate = idup;
-// }
+var idupdate = "";
+async function up(value) {
+  console.log("value: ", value);
+  const { _id, color, size, quantity, illustration } = JSON.parse(value);
+  console.log("illustration: ", illustration);
+  console.log("size: ", size);
+  $("#colorid").val(color);
+  // $("#sizeid").val(size);
+  $("#quantityid").val(quantity);
+  $("#changeIllustration").attr("src", illustration);
+  idupdate = _id;
+}
 
-// async function update() {
-//   try {
-//     const form = $("#form")[0];
-//     const formData = new FormData(form);
-//     const res = await $.ajax({
-//       url: `/product/${idupdate}?page=${current}&limit=5`,
-//       type: "PUT",
-//       data: formData,
-//       processData: false,
-//       contentType: false,
-//     });
-//     $("#Close").trigger("click");
-//     $(".button").html("");
-//     $(".button").html(res);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+async function update() {
+  try {
+    const form = $("#form")[0];
+    const formData = new FormData(form);
+    const res = await $.ajax({
+      url: `/product/${idupdate}?page=${current}&limit=5`,
+      type: "PUT",
+      data: formData,
+      processData: false,
+      contentType: false,
+    });
+    $("#Close").trigger("click");
+    $(".button").html("");
+    $(".button").html(res);
+  } catch (error) {
+    console.log(error);
+  }
+}

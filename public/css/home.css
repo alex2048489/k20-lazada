@@ -44,6 +44,7 @@ body {
 
 .category-item {
   width: 12.5%;
+  height: fit-content;
 }
 
 .category-item-link {

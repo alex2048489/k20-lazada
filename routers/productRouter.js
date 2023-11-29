@@ -123,39 +123,41 @@ router.put(
   "/:idupdate",
   upload.single("illustration"),
   async function (req, res) {
-    let arr = req.headers.referer.split("/");
-    let length = arr.length;
-    var arrimg = [];
-    for (let i = 0; i < req.files.length; i++) {
-      arrimg.push(req.files[i].path);
-    }
-    if (arrimg.length == 0) {
-      const update = await ProductModel.updateOne(
+    try {
+      let arr = req.headers.referer.split("/");
+      let length = arr.length;
+      // for (let i = 0; i < req.files.length; i++) {
+      //   arrimg.push(req.files[i].path);
+      // }
+      // if (arrimg.length == 0) {
+      await ProductModel.updateOne(
         { _id: req.params.idupdate },
         {
           color: req.body.colorid,
-          size: req.body.sizeid,
           quantity: req.body.quantityid,
         }
       );
-      const listproduct = await Product.find({ productCode: arr[length - 1] })
+      //   const listproduct = await Product.find({ productCode: arr[length - 1] })
+      //     .skip((req.query.page - 1) * req.query.limit)
+      //     .limit(req.query.limit);
+      //   res.render("admin/product", { listproduct });
+      // } else {
+      //   await ProductModel.updateOne(
+      //     { _id: req.params.idupdate },
+      //     {
+      //       listImg: arrimg,
+      //       color: req.body.colorid,
+      //       quantity: req.body.quantityid,
+      //     }
+      //   );
+      const listproduct = await ProductModel.find({
+        productCode: arr[length - 1],
+      })
         .skip((req.query.page - 1) * req.query.limit)
         .limit(req.query.limit);
       res.render("admin/product", { listproduct });
-    } else {
-      const update = await ProductModel.updateOne(
-        { _id: req.params.idupdate },
-        {
-          listImg: arrimg,
-          color: req.body.colorid,
-          size: req.body.sizeid,
-          quantity: req.body.quantityid,
-        }
-      );
-      const listproduct = await Product.find({ productCode: arr[length - 1] })
-        .skip((req.query.page - 1) * req.query.limit)
-        .limit(req.query.limit);
-      res.render("admin/product", { listproduct });
+    } catch (error) {
+      res.status(500).json(error);
     }
   }
 );

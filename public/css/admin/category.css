@@ -156,6 +156,8 @@
 #changeimg {
   width: 120px;
   height: 120px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 #bodychang {
   width: 100%;
@@ -164,9 +166,10 @@
 }
 #nameid {
   width: 100%;
-  height: 80px;
+  height: 60px;
   border: 1px solid orange;
   border-radius: 15px;
+  padding: 0 8px;
 }
 #footer-change {
   display: flex;
