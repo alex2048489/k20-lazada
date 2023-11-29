@@ -222,7 +222,6 @@ router.put("/favorite", checkLogin, async (req, res) => {
 });
 
 // Admin
-
 router.get("/admin/get", checkLogin, checkAdmin, async function (req, res) {
   try {
     const user = await userModel
@@ -239,8 +238,8 @@ router.get("/get", checkAdmin, async function (req, res) {
   try {
     const user = await userModel.find().limit(5);
     const total = await userModel.count();
-    const totalPage = Math.floor(total / 5);
-    res.render("admin/createuser", { user, totalPage: totalPage });
+    const totalPage = Math.ceil(total / 10);
+    res.render("admin/createUser", { user, totalPage: totalPage });
   } catch (error) {
     console.log("error: ", error);
   }
