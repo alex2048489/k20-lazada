@@ -300,8 +300,12 @@ body {
   background: #ffffff;
 }
 .card-container {
-  border: 1px solid #1a9cb7;
+  border: 1px solid rgb(234, 234, 234);
+  cursor: pointer;
   border-radius: 5px;
+}
+#payment-cash {
+  margin-bottom: 12px;
 }
 .payment-card-container {
   padding: 16px 14px;
@@ -352,6 +356,9 @@ body {
 .card-title {
   color: #333333;
   font-size: 14px;
+}
+.checked-icon {
+  visibility: hidden;
 }
 .checked-icon i {
   font-size: 18px;

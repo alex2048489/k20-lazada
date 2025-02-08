@@ -22,15 +22,22 @@
   },
   "homepage": "https://github.com/thaihmcsp/k20-Du-An-Cuoi-Khoa#readme",
   "dependencies": {
+    "axios": "^1.7.9",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dateformat": "^5.0.3",
     "dotenv": "^16.0.1",
+    "du-an-cuoi-khoa": "file:",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
     "imgbb-uploader": "^1.5.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.30.1",
     "mongoose": "^6.5.2",
     "multer": "^1.4.4",
-    "nodemailer": "^6.7.7"
+    "nodemailer": "^6.7.7",
+    "paypal-rest-sdk": "^1.8.1",
+    "qs": "^6.13.1"
   }
 }

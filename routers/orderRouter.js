@@ -4,6 +4,14 @@ const CartModel = require("../models/cartModel");
 const OrderModel = require("../models/orderModel");
 const { checkLogin } = require("../middleWare/checkLogin");
 const CategoryModel = require("../models/category");
+const { default: axios } = require("axios");
+const paypal = require("paypal-rest-sdk");
+
+paypal.configure({
+  mode: "sandbox", // live
+  client_id: process.env.PAYPAL_CLIENT_ID,
+  client_secret: process.env.PAYPAL_SECRET,
+});
 
 router.get("/:id", checkLogin, async (req, res) => {
   try {
@@ -117,6 +125,57 @@ router.post("/create", checkLogin, async (req, res) => {
   }
 });
 
+router.post("/create-payment", async (req, res) => {
+  try {
+    const create_payment_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: "http://localhost:3000/home",
+        cancel_url: "http://localhost:3000/cart",
+      },
+      transactions: [
+        {
+          item_list: {
+            items: [
+              {
+                name: "Red Sox Hat",
+                sku: "001",
+                price: "25.00",
+                currency: "USD",
+                quantity: 1,
+              },
+            ],
+          },
+          amount: {
+            currency: "USD",
+            total: "25.00",
+          },
+          description: "Hat for the best team ever",
+        },
+      ],
+    };
+
+    paypal.payment.create(create_payment_json, function (error, payment) {
+      if (error) {
+        throw error;
+      } else {
+        console.log("payment: ", payment);
+        for (let i = 0; i < payment.links.length; i++) {
+          if (payment.links[i].rel === "approval_url") {
+            // res.redirect(payment.links[i].href);
+            res.json(payment.links[i].href);
+          }
+        }
+      }
+    });
+  } catch (error) {
+    console.log("error: ", error);
+  }
+});
+
 router.delete("/:id", checkLogin, async (req, res) => {
   try {
     await OrderModel.deleteOne({
@@ -200,6 +259,20 @@ router.post("/sendCode", checkLogin, async (req, res) => {
     res.status(500).json({ mess: "Server error", error });
   }
 });
+
+// async function generateAccessToken() {
+//   const response = await axios({
+//     url: process.env.PAYPAL_BASE_URL + "/v1/oauth2/token",
+//     method: "post",
+//     data: "grant_type=client_credentials",
+//     auth: {
+//       username: process.env.PAYPAL_CLIENT_ID,
+//       password: process.env.PAYPAL_SECRET,
+//     },
+//   });
+
+//   return response.data.access_token;
+// }
 
 function sendMail(receiver, subject, htmlContent) {
   const transporter = nodemailer.createTransport({

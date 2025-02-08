@@ -223,6 +223,22 @@ function diachi() {
   }
 }
 
+var paymentMethod = "";
+
+$(".card-container").on("click", function () {
+  const cardContainer = $(".card-container");
+  for (var i = 0; i < cardContainer.length; i++) {
+    $("#" + $(cardContainer[i])[0].id + " .checked-icon").css(
+      "visibility",
+      "hidden"
+    );
+    $(cardContainer[i]).css("border", "1px solid rgb(234, 234, 234)");
+  }
+  $(this).css("border", "1px solid #1a9cb7");
+  $("#" + $(this)[0].id + " .checked-icon").css("visibility", "visible");
+  paymentMethod = $(this)[0].id;
+});
+
 async function sendCode(code) {
   try {
     const htmlSuccess = `
@@ -298,7 +314,21 @@ async function saveInfo() {
             : $(".nr").text();
         try {
           $(".summary-section-code span").text("");
-          if ($("#codeConfirm").val() == codeConfirm) {
+          if (paymentMethod === "payment-online") {
+            const response = await $.ajax({
+              type: "POST",
+              url: "/order/create-payment",
+              data: {
+                name: fullname,
+                phone,
+                address,
+                total: $(".bill").attr("data-total"),
+                type,
+                returnUrl: `/order/${$(this).attr("id")}?result=success`,
+              },
+            });
+            window.location.href = response;
+          } else {
             window.location.href = `/order/${$(this).attr(
               "id"
             )}?result=success`;
@@ -313,27 +343,44 @@ async function saveInfo() {
                 type,
               },
             });
-          } else {
-            $("#codeConfirm").css("border", "1px solid var(--error-color)");
-            let turnNumber = $(this).attr("turn-number");
-            turnNumber = turnNumber * 1 + 1;
-            $(this).attr("turn-number", turnNumber);
-            const turnError = $(this).attr("turn-number");
-            if (turnError < 3) {
-              $(".summary-section-code span").text(
-                $("#codeConfirm").val() == ""
-                  ? "Đây là trường bắt buộc. Vui lòng điền đầy đủ! " +
-                      ` (${turnError}/3)`
-                  : "Mã xác nhận không chính xác" + ` (${turnError}/3)`
-              );
-            } else {
-              alert(
-                "Bạn đã thất bại cả 3 lần. Vui lòng thoát ra và thử lại sau!"
-              );
-              window.location.href = "/cart";
-            }
           }
+          // if ($("#codeConfirm").val() == codeConfirm) {
+          //   window.location.href = `/order/${$(this).attr(
+          //     "id"
+          //   )}?result=success`;
+          //   await $.ajax({
+          //     type: "POST",
+          //     url: "/order/create",
+          //     data: {
+          //       name: fullname,
+          //       phone,
+          //       address,
+          //       total: $(".bill").attr("data-total"),
+          //       type,
+          //     },
+          //   });
+          // } else {
+          //   $("#codeConfirm").css("border", "1px solid var(--error-color)");
+          //   let turnNumber = $(this).attr("turn-number");
+          //   turnNumber = turnNumber * 1 + 1;
+          //   $(this).attr("turn-number", turnNumber);
+          //   const turnError = $(this).attr("turn-number");
+          //   if (turnError < 3) {
+          //     $(".summary-section-code span").text(
+          //       $("#codeConfirm").val() == ""
+          //         ? "Đây là trường bắt buộc. Vui lòng điền đầy đủ! " +
+          //             ` (${turnError}/3)`
+          //         : "Mã xác nhận không chính xác" + ` (${turnError}/3)`
+          //     );
+          //   } else {
+          //     alert(
+          //       "Bạn đã thất bại cả 3 lần. Vui lòng thoát ra và thử lại sau!"
+          //     );
+          //     window.location.href = "/cart";
+          //   }
+          // }
         } catch (error) {
+          console.log("error: ", error);
           alert(error.responseJSON.mess);
         }
       });
