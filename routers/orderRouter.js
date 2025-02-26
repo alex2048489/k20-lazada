@@ -132,27 +132,28 @@ router.post("/create-payment", async (req, res) => {
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "http://localhost:3000/home",
-        cancel_url: "http://localhost:3000/cart",
+        return_url: process.env.BASE_URL + req.body.returnUrl,
+        cancel_url: process.env.BASE_URL + "/cart",
       },
       transactions: [
         {
           item_list: {
             items: [
-              {
-                name: "Red Sox Hat",
-                sku: "001",
-                price: "25.00",
-                currency: "USD",
-                quantity: 1,
-              },
+              // {
+              //   name: "Red Sox Hat",
+              //   sku: "001",
+              //   price: "25.00",
+              //   currency: "USD",
+              //   quantity: 1,
+              // },
             ],
           },
           amount: {
             currency: "USD",
-            total: "25.00",
+            total: (req.body.total / 25000).toString(),
           },
-          description: "Hat for the best team ever",
+
+          description: "Payment online - Lazada",
         },
       ],
     };
