@@ -102,14 +102,6 @@ router.post("/create", checkLogin, async (req, res) => {
           UserID: req.id,
           productList: listData,
         });
-        await sendMail(
-          email,
-          "Lazada K20 đã nhận đơn hàng ",
-          `
-            <h3>Cảm ơn bạn đã đặt hàng tại Lazada của chúng tôi! </h3>
-            <p></p>
-          `
-        );
         res.status(200).json({ mess: "Successfull" });
       } else {
         res
